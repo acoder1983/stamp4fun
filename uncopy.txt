@@ -1,0 +1,7 @@
+.dll
+.pdb
+.exe
+.jar
+\obj\
+.jpg
+\.svn\

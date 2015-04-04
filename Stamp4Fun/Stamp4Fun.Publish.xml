@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<publishData>
+  <publishProfile publishUrl="\\192.168.1.100\Shared\web\stamp4fun" deleteExistingFiles="False" ftpAnonymousLogin="False" ftpPassiveMode="True" msdeploySite="" msdeploySiteID="" msdeployRemoteSitePhysicalPath="" msdeployAllowUntrustedCertificate="False" msdeploySkipExtraFilesOnServer="True" msdeployMarkAsApp="False" profileName="配置文件1" publishMethod="FileSystem" replaceMatchingFiles="True" userName="" savePWD="False" userPWD="" SelectedForPublish="True">
+    <file relUrl="UI_Main/Main.ascx" publishTime="03/29/2014 11:22:28" />
+    <file relUrl="bin/Stamp4Fun.Comm.dll" publishTime="06/21/2014 17:06:20" />
+    <file relUrl="Global.asax" publishTime="03/29/2014 11:07:01" />
+    <file relUrl="Resource/clnt_info.jpg" publishTime="05/17/2014 20:26:18" />
+    <file relUrl="bin/Stamp4Fun.ScottCatalog.dll" publishTime="06/21/2014 17:06:21" />
+    <file relUrl="Styles/Site.css" publishTime="05/11/2014 01:57:47" />
+    <file relUrl="UI_Account/ChangePasswordSuccess.aspx" publishTime="03/29/2014 11:07:01" />
+    <file relUrl="Resource/clnt_search.jpg" publishTime="05/14/2014 20:39:33" />
+    <file relUrl="bin/Stamp4Fun.pdb" publishTime="06/21/2014 17:06:23" />
+    <file relUrl="Scripts/jquery-1.4.1.js" publishTime="03/29/2014 11:07:01" />
+    <file relUrl="Resource/clnt_page_search.jpg" publishTime="05/14/2014 20:54:44" />
+    <file relUrl="Resource/clnt_stamp_pic.jpg" publishTime="05/14/2014 20:43:47" />
+    <file relUrl="UI_Main/Download.aspx" publishTime="06/15/2014 08:59:47" />
+    <file relUrl="UI_Main/About.aspx" publishTime="04/08/2014 22:15:58" />
+    <file relUrl="Resource/clnt_large_pic.jpg" publishTime="05/14/2014 20:57:46" />
+    <file relUrl="bin/Stamp4Fun.DBUtil.pdb" publishTime="06/21/2014 17:06:21" />
+    <file relUrl="Resource/clnt_result.jpg" publishTime="05/17/2014 20:31:57" />
+    <file relUrl="Site.Master" publishTime="05/13/2014 23:32:49" />
+    <file relUrl="Resource/clnt_topic_sel.jpg" publishTime="05/14/2014 20:45:21" />
+    <file relUrl="bin/Stamp4Fun.DBUtil.dll" publishTime="06/21/2014 17:06:22" />
+    <file relUrl="UI_Search/Log.aspx" publishTime="05/14/2014 19:53:45" />
+    <file relUrl="Resource/clnt_topic_add.jpg" publishTime="05/14/2014 20:46:42" />
+    <file relUrl="Scripts/jquery-1.4.1.min.js" publishTime="03/29/2014 11:07:01" />
+    <file relUrl="bin/Stamp4Fun.dll" publishTime="06/21/2014 17:06:24" />
+    <file relUrl="Default.aspx" publishTime="05/11/2014 13:40:30" />
+    <file relUrl="Resource/clnt_main.jpg" publishTime="05/14/2014 20:31:50" />
+    <file relUrl="UI_Account/Web.config" publishTime="05/09/2014 00:10:15" />
+    <file relUrl="UI_Account/Register.aspx" publishTime="03/29/2014 11:07:01" />
+    <file relUrl="bin/Stamp4Fun.Comm.pdb" publishTime="06/21/2014 17:06:20" />
+    <file relUrl="Resource/clnt_page.jpg" publishTime="05/14/2014 20:37:03" />
+    <file relUrl="bin/Stamp4Fun.ScottCatalog.pdb" publishTime="06/21/2014 17:06:20" />
+    <file relUrl="Web.config" publishTime="05/02/2014 11:06:39" />
+    <file relUrl="UI_Account/Login.aspx" publishTime="03/29/2014 11:07:01" />
+    <file relUrl="UI_Search/SearchResult.aspx" publishTime="04/07/2014 15:50:29" />
+    <file relUrl="Resource/clnt_set_pic.jpg" publishTime="05/14/2014 20:41:37" />
+    <file relUrl="Resource/dotneterr.jpg" publishTime="05/10/2014 23:25:02" />
+    <file relUrl="UI_Account/ChangePassword.aspx" publishTime="03/29/2014 11:07:01" />
+    <file relUrl="Resource/clnt_save.jpg" publishTime="05/14/2014 20:53:06" />
+    <file relUrl="Scripts/jquery-1.4.1-vsdoc.js" publishTime="03/29/2014 11:07:01" />
+  </publishProfile>
+</publishData>
