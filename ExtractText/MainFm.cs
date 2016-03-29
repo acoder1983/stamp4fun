@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -82,10 +82,10 @@ namespace Stamp4Fun.ExtractText
             
             // prcess every page
             PointPair[] pps = new PointPair[]{
-                new PointPair(new Point(372, 159), new Point(471, 700)),
-                new PointPair(new Point(474, 159), new Point(573, 700)),
-                new PointPair(new Point(576, 159), new Point(675, 700)),
-                new PointPair(new Point(678, 159), new Point(777, 700))
+                new PointPair(new Point(660, 167), new Point(810, 1003)),
+                new PointPair(new Point(817, 167), new Point(968, 1003)),
+                new PointPair(new Point(974, 167), new Point(1125, 1003)),
+                new PointPair(new Point(1131, 167), new Point(1282, 1003))
             };
 
             foreach (string pageFile in pageFiles)
@@ -101,24 +101,16 @@ namespace Stamp4Fun.ExtractText
                     new KmSim.Delay(5000).Do();
 
                     // fit the page size
-                    new KmSim.MouseMoveTo(434, 105).Do();
+                    new KmSim.MouseMoveTo(620, 100).Do();
                     new KmSim.Delay(500).Do();
                     new KmSim.MouseLeftClick().Do();
                     new KmSim.Delay(1000).Do();
-                    
-                    // click the page proc menu
-                    new KmSim.KeyPress("%v").Do();
-                    new KmSim.Delay(1000).Do();
-                    new KmSim.KeyPress("t").Do();
-                    new KmSim.Delay(1000).Do();
-                    new KmSim.KeyPress("p").Do();
-                    new KmSim.Delay(2000).Do();
                     
                     // click the cut btn
-                    new KmSim.MouseMoveTo(1190, 385).Do();
+                    new KmSim.MouseMoveTo(805, 70).Do();
                     new KmSim.Delay(500).Do();
                     new KmSim.MouseLeftClick().Do();
-                    new KmSim.Delay(500).Do();
+                    new KmSim.Delay(1000).Do();
 
                     // select a region
                     new KmSim.MouseMoveTo(pp.TopLeft.X, pp.TopLeft.Y).Do();
@@ -131,12 +123,8 @@ namespace Stamp4Fun.ExtractText
                     new KmSim.Delay(1000).Do();
                     
                     // cut it
-                    new KmSim.MouseMoveTo(
-                        (pp.TopLeft.X + pp.BottomRight.X) / 2,
-                        (pp.TopLeft.Y + pp.BottomRight.Y) / 2).Do();
+                    new KmSim.KeyPress("{ENTER}").Do();
                     new KmSim.Delay(1000).Do();
-                    new KmSim.MouseLeftDoubleClick().Do();
-                    new KmSim.Delay(2000).Do();
                     new KmSim.KeyPress("{ENTER}").Do();
                     new KmSim.Delay(1000).Do();
 
@@ -147,21 +135,33 @@ namespace Stamp4Fun.ExtractText
                     // save it to txt
                     new KmSim.KeyPress("%f").Do();
                     new KmSim.Delay(1000).Do();
-                    new KmSim.KeyPress("h").Do();
+                    new KmSim.KeyPress("t").Do();
                     new KmSim.Delay(1000).Do();
-                    new KmSim.KeyPress("m").Do();
-                    new KmSim.Delay(1000).Do();
-                    new KmSim.KeyPress("c").Do();
+                    new KmSim.KeyPress("{DOWN}").Do();
+                    new KmSim.Delay(500).Do();
+                    new KmSim.KeyPress("{DOWN}").Do();
+                    new KmSim.Delay(500).Do();
+                    new KmSim.KeyPress("{DOWN}").Do();
+                    new KmSim.Delay(500).Do();
+                    new KmSim.KeyPress("{DOWN}").Do();
+                    new KmSim.Delay(500).Do();
+                    new KmSim.KeyPress("{DOWN}").Do();
+                    new KmSim.Delay(500).Do();
+                    new KmSim.KeyPress("{RIGHT}").Do();
+                    new KmSim.Delay(500).Do();
+                    new KmSim.KeyPress("{DOWN}").Do();
+                    new KmSim.Delay(500).Do();
+                    new KmSim.KeyPress("{ENTER}").Do();
                     new KmSim.Delay(1000).Do();
                     new KmSim.KeyPress(string.Format(@"{2}\{0}.{1}.txt", pageFile.Substring(
                         pageFile.LastIndexOf(") ")+2), ++i, folderpath)).Do();
                     new KmSim.Delay(1000).Do();
                     new KmSim.KeyPress("{ENTER}").Do();
-                    new KmSim.Delay(8000).Do();
+                    new KmSim.Delay(5000).Do();
 
                     // close the page
                     new KmSim.KeyPress("%{F4}").Do();
-                    new KmSim.Delay(3000).Do();
+                    new KmSim.Delay(1000).Do();
                 }
 
                 // open it with adobe
@@ -171,11 +171,25 @@ namespace Stamp4Fun.ExtractText
                 // save it to tiff
                 new KmSim.KeyPress("%f").Do();
                 new KmSim.Delay(1000).Do();
-                new KmSim.KeyPress("h").Do();
-                new KmSim.Delay(1000).Do();
-                new KmSim.KeyPress("i").Do();
-                new KmSim.Delay(1000).Do();
                 new KmSim.KeyPress("t").Do();
+                new KmSim.Delay(1000).Do();
+                new KmSim.KeyPress("{DOWN}").Do();
+                new KmSim.Delay(500).Do();
+                new KmSim.KeyPress("{DOWN}").Do();
+                new KmSim.Delay(500).Do();
+                new KmSim.KeyPress("{DOWN}").Do();
+                new KmSim.Delay(500).Do();
+                new KmSim.KeyPress("{DOWN}").Do();
+                new KmSim.Delay(500).Do();
+                new KmSim.KeyPress("{RIGHT}").Do();
+                new KmSim.Delay(500).Do();
+                new KmSim.KeyPress("{DOWN}").Do();
+                new KmSim.Delay(500).Do();
+                new KmSim.KeyPress("{DOWN}").Do();
+                new KmSim.Delay(500).Do();
+                new KmSim.KeyPress("{DOWN}").Do();
+                new KmSim.Delay(500).Do();
+                new KmSim.KeyPress("{ENTER}").Do();
                 new KmSim.Delay(1000).Do();
                 new KmSim.KeyPress(string.Format(@"{1}\{0}.tiff", pageFile.Substring(
                     pageFile.LastIndexOf(") ") + 2), folderpath)).Do();
