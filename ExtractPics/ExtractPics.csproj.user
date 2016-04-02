@@ -1,7 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
-    <StartWorkingDirectory>C:\atest\</StartWorkingDirectory>
-    <StartArguments>"[《斯科特邮票目录2008版》].Scott-2008.StCatalogue.Volume.2.(Malestrom) 830.tiff"</StartArguments>
-  </PropertyGroup>
-</Project>
