@@ -23,18 +23,15 @@ namespace KmSim
         public const int MOUSEEVENTF_LEFTUP = 0x4;
     }
 
-    public interface IKmSim{
-        void Do();
+    public class IKmSim{
+        public virtual void Do(int waitMilliSecs){
+            if(waitMilliSecs>0){
+                System.Threading.Thread.Sleep(waitMilliSecs);
+            }
+        }
     }
 
     public class Delay : IKmSim{
-        private int millisecs;
-        public Delay(int millisecs){
-            this.millisecs=millisecs;
-        }
-        public void Do(){
-            System.Threading.Thread.Sleep(this.millisecs);
-        }
     }
 
     public class MouseMoveTo:IKmSim{
@@ -46,34 +43,39 @@ namespace KmSim
             this.y=y;
         }
 
-        public void Do(){
+        public override void Do(int waitMilliSecs){
             Win32Api.SetCursorPos(this.x,this.y);
+            base.Do(waitMilliSecs);
         }
     }
 
     public class MouseLeftClick:IKmSim{
-        public void Do(){
+        public override void Do(int waitMilliSecs){
             Win32Api.mouse_event(Win32Api.MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0);
             Win32Api.mouse_event(Win32Api.MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
+            base.Do(waitMilliSecs);
         }
     }
 
     public class MouseLeftUp:IKmSim{
-        public void Do(){
+        public override void Do(int waitMilliSecs){
             Win32Api.mouse_event(Win32Api.MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
+            base.Do(waitMilliSecs);
         }
     }
 
     public class MouseLeftDown:IKmSim{
-        public void Do(){
+        public override void Do(int waitMilliSecs){
             Win32Api.mouse_event(Win32Api.MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0);
+            base.Do(waitMilliSecs);
         }
     }
 
     public class MouseLeftDoubleClick:IKmSim{
-        public void Do(){
-            new MouseLeftClick().Do();
-            new MouseLeftClick().Do();
+        public override void Do(int waitMilliSecs){
+            new MouseLeftClick().Do(0);
+            new MouseLeftClick().Do(0);
+            base.Do(waitMilliSecs);
         }
     }
 
@@ -83,8 +85,9 @@ namespace KmSim
             this.keys=keys;
         }
 
-        public void Do(){
+        public override void Do(int waitMilliSecs){
             SendKeys.SendWait(this.keys);
+            base.Do(waitMilliSecs);
         }
     }
 }
