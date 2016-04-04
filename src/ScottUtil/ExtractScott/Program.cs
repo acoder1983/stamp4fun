@@ -15,20 +15,19 @@ namespace ScottUtil.ExtractScott
         static int SHORT_WAIT=550;
         static int MEDIUM_WAIT=1500;
         static int LONG_WAIT=2500;
-        static int CUT_Y_TOP=155;
-        static int CUT_Y_DOWN=1020;
-        static int CUT_X_LEN=158;
-        static int[] CUT_X={650,813,977,1139};
+        static int CUT_Y_TOP=153;
+        static int CUT_Y_DOWN=700;
+        static int CUT_X_LEN=98;
+        static int[] CUT_X={490,593,696,798};
 
-        static int ADOBEPRO8_FIT_X=621;
-        static int ADOBEPRO8_FIT_Y=103;
-        static int ADOBEPRO8_CUT_X=805;
+        static int ADOBEPRO8_FIT_X=666;
+        static int ADOBEPRO8_FIT_Y=102;
+        static int ADOBEPRO8_CUT_X=775;
         static int ADOBEPRO8_CUT_Y=70;
 
-
-        static int FOXIT7_X=975;
-        static int FOXIT7_Y=645;
-        static int FOXIT7_Y_LEN=40;
+        static int FOXIT7_X=469;
+        static int FOXIT7_Y=469;
+        // static int FOXIT7_Y_LEN=30;
         /// <summary>
         /// 应用程序的主入口点。
         /// </summary>
@@ -97,20 +96,20 @@ namespace ScottUtil.ExtractScott
 
         static void ProcessInFoxit7(string subPageFile, int pageIdx, string pageFolderPath){
             System.Diagnostics.Process.Start(@"C:\Program Files (x86)\Foxit Software\Foxit Reader\FoxitReader.exe", subPageFile);
-            new KmSim.Delay().Do(LONG_WAIT);
+            new KmSim.Delay().Do(LONG_WAIT*2);
 
             // trigger save as 
             new KmSim.KeyPress("^+s").Do(MEDIUM_WAIT);
 
             // choose txt type
-            new KmSim.MouseMoveTo(FOXIT7_X, FOXIT7_Y+FOXIT7_Y_LEN).Do(SHORT_WAIT);
+            new KmSim.MouseMoveTo(FOXIT7_X, FOXIT7_Y+30).Do(SHORT_WAIT);
             new KmSim.MouseLeftClick().Do(SHORT_WAIT);
-            new KmSim.MouseMoveTo(FOXIT7_X, FOXIT7_Y+FOXIT7_Y_LEN*2).Do(SHORT_WAIT);
-            new KmSim.MouseLeftClick().Do(SHORT_WAIT);
-            new KmSim.MouseMoveTo(FOXIT7_X, FOXIT7_Y).Do(SHORT_WAIT);
+            new KmSim.MouseMoveTo(FOXIT7_X, FOXIT7_Y+75).Do(SHORT_WAIT);
             new KmSim.MouseLeftClick().Do(SHORT_WAIT);
 
             // input txt path
+            new KmSim.MouseMoveTo(FOXIT7_X, FOXIT7_Y).Do(SHORT_WAIT);
+            new KmSim.MouseLeftClick().Do(SHORT_WAIT);
             new KmSim.KeyPress(string.Format(@"{0}\{1}.f.txt", pageFolderPath, pageIdx)).Do(SHORT_WAIT);
             new KmSim.KeyPress("{ENTER}").Do(MEDIUM_WAIT);
 
