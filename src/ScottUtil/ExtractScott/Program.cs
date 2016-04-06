@@ -15,18 +15,20 @@ namespace ScottUtil.ExtractScott
         static int SHORT_WAIT=550;
         static int MEDIUM_WAIT=1500;
         static int LONG_WAIT=2500;
-        static int CUT_Y_TOP=153;
-        static int CUT_Y_DOWN=700;
-        static int CUT_X_LEN=98;
-        static int[] CUT_X={490,593,696,798};
+        static int CUT_Y_TOP=168;
+        static int CUT_Y_DOWN=1003;
+        static int CUT_X_LEN=152;
+        static int[] CUT_X={660,817,974,1131};
 
-        static int ADOBEPRO8_FIT_X=666;
+        static int ADOBEPRO8_FIT_X=640;
         static int ADOBEPRO8_FIT_Y=102;
-        static int ADOBEPRO8_CUT_X=775;
+        static int ADOBEPRO8_CUT_X=804;
         static int ADOBEPRO8_CUT_Y=70;
 
-        static int FOXIT7_X=469;
-        static int FOXIT7_Y=469;
+        static int FOXIT7_X=1000;
+        static int FOXIT7_PATH_Y=650;
+        static int FOXIT7_FILTER_Y=680;
+        static int FOXIT7_TXT_Y=725;
         // static int FOXIT7_Y_LEN=30;
         /// <summary>
         /// 应用程序的主入口点。
@@ -35,6 +37,7 @@ namespace ScottUtil.ExtractScott
         static void Main(string[] args)
         {
             Console.WriteLine("extract begin");
+            
             if(args.Length!=1){
                 Console.WriteLine("usage: ScottUtil.ExtractScott.exe [pdf path]");
                 return;
@@ -42,7 +45,7 @@ namespace ScottUtil.ExtractScott
             string folderpath = args[0];
 
             // read all page names
-            string[] pageFiles = Directory.GetFiles(folderpath, "*.pdf", SearchOption.TopDirectoryOnly);
+            string[] pageFiles = Directory.GetFiles(folderpath, "*.pdf", SearchOption.AllDirectories);
             
 
             // sub page ranges
@@ -50,20 +53,8 @@ namespace ScottUtil.ExtractScott
 
             foreach (string pageFile in pageFiles)
             {
-                string pageNumStr=GetPageNumStr(pageFile);
-
-                string volNumStr=pageFile.Substring(pageFile.IndexOf("Volume.")+7,1);
-
-                // make page folder dir
-                string pageFolderName=string.Format("v{0}-{1}",volNumStr,pageNumStr);
-                string pageFolderPath=folderpath+@"\"+pageFolderName;
-                Directory.CreateDirectory(pageFolderPath);
-
-                // move page into dir
-                string newPagePath=pageFolderPath+@"\"+pageFolderName+".pdf";
-                File.Copy(pageFile, newPagePath, true);
-
-                Console.WriteLine(string.Format("process {0}", pageFolderName));
+                string pageFolderPath=pageFile.Substring(0,pageFile.Length-@"\xxx.pdf".Length);
+                Console.WriteLine(string.Format("process {0}", pageFile));
 
                 // process every subpage
                 int pageIdx = 1;
@@ -71,7 +62,7 @@ namespace ScottUtil.ExtractScott
                 {
                     // create sub page
                     string subPageFile = string.Format(@"{0}\{1}.pdf", pageFolderPath,pageIdx);
-                    File.Copy(newPagePath, subPageFile, true);
+                    File.Copy(pageFile, subPageFile, true);
 
                     ProcessInAdobePro8(subPageFile,pageIdx, pageFolderPath, pp);
 
@@ -96,19 +87,19 @@ namespace ScottUtil.ExtractScott
 
         static void ProcessInFoxit7(string subPageFile, int pageIdx, string pageFolderPath){
             System.Diagnostics.Process.Start(@"C:\Program Files (x86)\Foxit Software\Foxit Reader\FoxitReader.exe", subPageFile);
-            new KmSim.Delay().Do(LONG_WAIT*2);
+            new KmSim.Delay().Do(LONG_WAIT);
 
             // trigger save as 
             new KmSim.KeyPress("^+s").Do(MEDIUM_WAIT);
 
             // choose txt type
-            new KmSim.MouseMoveTo(FOXIT7_X, FOXIT7_Y+30).Do(SHORT_WAIT);
+            new KmSim.MouseMoveTo(FOXIT7_X, FOXIT7_FILTER_Y).Do(SHORT_WAIT);
             new KmSim.MouseLeftClick().Do(SHORT_WAIT);
-            new KmSim.MouseMoveTo(FOXIT7_X, FOXIT7_Y+75).Do(SHORT_WAIT);
+            new KmSim.MouseMoveTo(FOXIT7_X, FOXIT7_TXT_Y).Do(SHORT_WAIT);
             new KmSim.MouseLeftClick().Do(SHORT_WAIT);
 
             // input txt path
-            new KmSim.MouseMoveTo(FOXIT7_X, FOXIT7_Y).Do(SHORT_WAIT);
+            new KmSim.MouseMoveTo(FOXIT7_X, FOXIT7_PATH_Y).Do(SHORT_WAIT);
             new KmSim.MouseLeftClick().Do(SHORT_WAIT);
             new KmSim.KeyPress(string.Format(@"{0}\{1}.f.txt", pageFolderPath, pageIdx)).Do(SHORT_WAIT);
             new KmSim.KeyPress("{ENTER}").Do(MEDIUM_WAIT);
@@ -137,7 +128,7 @@ namespace ScottUtil.ExtractScott
 
             SaveSubPageInJpg(pageIdx, pageFolderPath);
             
-            SaveSubPageInTiff(pageIdx, pageFolderPath);
+            // SaveSubPageInTiff(pageIdx, pageFolderPath);
 
             ClosePdfApp();
         }
