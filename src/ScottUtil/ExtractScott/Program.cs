@@ -29,6 +29,7 @@ namespace ScottUtil.ExtractScott
         static int FOXIT7_PATH_Y=650;
         static int FOXIT7_FILTER_Y=680;
         static int FOXIT7_TXT_Y=725;
+
         // static int FOXIT7_Y_LEN=30;
         /// <summary>
         /// 应用程序的主入口点。
@@ -42,7 +43,15 @@ namespace ScottUtil.ExtractScott
                 Console.WriteLine("usage: ScottUtil.ExtractScott.exe [pdf path]");
                 return;
             }
+
             string folderpath = args[0];
+
+            if(folderpath.EndsWith(".pdf")){
+                Console.WriteLine("activating pdf exes...");
+                ActivatePdfExes(folderpath);
+                Console.WriteLine("finished!");
+                return;
+            }
 
             // read all page names
             string[] pageFiles = Directory.GetFiles(folderpath, "*.pdf", SearchOption.AllDirectories);
@@ -85,9 +94,28 @@ namespace ScottUtil.ExtractScott
             return pps;
         }
 
-        static void ProcessInFoxit7(string subPageFile, int pageIdx, string pageFolderPath){
+        static void ActivatePdfExes(string pageFile){
+            OpenWithAdobeReader11(pageFile);
+            new KmSim.Delay().Do(LONG_WAIT*2);
+            ClosePdfApp();
+            new KmSim.Delay().Do(LONG_WAIT);
+            OpenWithAdobePro8(pageFile);
+            new KmSim.Delay().Do(LONG_WAIT*2);
+            ClosePdfApp();
+            new KmSim.Delay().Do(LONG_WAIT);
+            OpenWithFoxit7(pageFile);
+            new KmSim.Delay().Do(LONG_WAIT*3);
+            ClosePdfApp();
+            new KmSim.Delay().Do(LONG_WAIT);
+        }
+
+        static void OpenWithFoxit7(string subPageFile){
             System.Diagnostics.Process.Start(@"C:\Program Files (x86)\Foxit Software\Foxit Reader\FoxitReader.exe", subPageFile);
             new KmSim.Delay().Do(LONG_WAIT);
+        }
+
+        static void ProcessInFoxit7(string subPageFile, int pageIdx, string pageFolderPath){
+            OpenWithFoxit7(subPageFile);
 
             // trigger save as 
             new KmSim.KeyPress("^+s").Do(MEDIUM_WAIT);
