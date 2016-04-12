@@ -38,7 +38,17 @@ public class TestSearchScott extends TestCase {
 		Builder.build(scottCatalogPath, indexPath);
 
 		Searcher searcher = new Searcher(indexPath);
-		ArrayList<String> results = searcher.search("content", "1942");
+
+		ArrayList<String> results = searcher.search("path", "china");
 		this.assertEquals(3, results.size());
+
+		results = searcher.search("contents", "1991");
+		this.assertEquals(1, results.size());
+
+		results = searcher.search("contents", "1992");
+		this.assertEquals(2, results.size());
+
+		results = searcher.search("contents", "1993");
+		this.assertEquals(0, results.size());
 	}
 }
