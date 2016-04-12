@@ -126,7 +126,7 @@ public class Builder {
 				// field that is indexed (i.e. searchable), but don't tokenize
 				// the field into separate words and don't index term frequency
 				// or positional information:
-				Field pathField = new StringField("path", file.toString(), Field.Store.YES);
+				Field pathField = new TextField("path", file.toString(), Field.Store.YES);
 				doc.add(pathField);
 
 				// Add the last modified date of the file a field named
