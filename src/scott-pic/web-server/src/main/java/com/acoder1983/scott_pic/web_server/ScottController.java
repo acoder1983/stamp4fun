@@ -1,39 +1,64 @@
 package com.acoder1983.scott_pic.web_server;
 
-import java.util.concurrent.atomic.AtomicLong;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Map;
 
+import org.apache.commons.io.FileUtils;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.acoder1983.scott_pic.search_engine.Searcher;
+import com.acoder1983.scott_pic.util.Logger;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 @RestController
 public class ScottController {
 
-	private final AtomicLong counter = new AtomicLong();
-	
 	public static String INDEX_PATH;
 
 	public static String NATION_FILE;
 
+	@CrossOrigin(origins = "http://localhost:8080")
 	@RequestMapping("/scott")
-	public ScottResult searchScott(@RequestParam(value = "searchKeys") String searchKeys) {
+	public ScottResult searchScott(@RequestParam(value = "search") String searchStr) throws Exception {
+		Logger.info("search string: " + searchStr);
 		ScottResult result = new ScottResult();
 
 		String[] searchKeys = splitSearchStr(searchStr);
+
 		String nation = parseNation(searchKeys);
+		Logger.info("nation: " + nation);
 		String year = parseYear(searchKeys);
+		Logger.info("year: " + year);
+
 		if (nation == null || year == null) {
 			result.setErrMsg("input nation+year");
 		} else {
 			Searcher searcher = new Searcher(INDEX_PATH);
 			ArrayList<String> nationPages = searcher.search("path", nation);
-			ArrayList<String> yearPages = searcher.search("contents", year);
+			Logger.info("nationPages num: " + nationPages.size());
 
-			result.setPages(parsePages(nationPages, yearPages, File.separator));
+			ArrayList<String> yearPages = searcher.search("contents", year);
+			Logger.info("yearPages num: " + yearPages.size());
+
+			ArrayList<String> pages = parsePages(nationPages, yearPages, File.separator);
+			for (int i = 0; i < pages.size(); ++i) {
+				pages.set(i, pages.get(i).replace("f.txt", "jpg"));
+			}
+			Logger.info("pages num: " + yearPages.size());
+
+			result.setPages(pages);
 		}
 		return result;
 	}
-	
+
 	public ArrayList<String> parsePages(ArrayList<String> nationPages, ArrayList<String> yearPages, String fileSep) {
 		nationPages.sort(null);
 		yearPages.sort(null);
@@ -113,18 +138,16 @@ public class ScottController {
 		}
 	}
 
-	private String parseNation(String[] searchKeys) {
-		// org.codehaus.jackson
-		// ObjectMapper MAPPER = new ObjectMapper();
-		// String content = FileUtils.readFileToString(NATION_FILE, "UTF-8");
-		// Map<String, String> nationMap = MAPPER.readValue(content, new
-		// TypeReference<Map<String, String>>() {
-		// });
-		// for (String key : searchKeys) {
-		// if (nationMap.containsKey(key)) {
-		// return nationMap.get(key);
-		// }
-		// }
+	private String parseNation(String[] searchKeys) throws JsonParseException, JsonMappingException, IOException {
+		ObjectMapper MAPPER = new ObjectMapper();
+		String content = FileUtils.readFileToString(new File(NATION_FILE), "UTF-8");
+		Map<String, String> nationMap = MAPPER.readValue(content, new TypeReference<Map<String, String>>() {
+		});
+		for (String key : searchKeys) {
+			if (nationMap.containsKey(key)) {
+				return nationMap.get(key);
+			}
+		}
 		return null;
 	}
 

@@ -9,14 +9,14 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-public class TestSearchScott extends TestCase {
+public class TestSearchEngine extends TestCase {
 	/**
 	 * Create the test case
 	 *
 	 * @param testName
 	 *            name of the test case
 	 */
-	public TestSearchScott(String testName) {
+	public TestSearchEngine(String testName) {
 		super(testName);
 	}
 
@@ -24,7 +24,7 @@ public class TestSearchScott extends TestCase {
 	 * @return the suite of tests being tested
 	 */
 	public static Test suite() {
-		return new TestSuite(TestSearchScott.class);
+		return new TestSuite(TestSearchEngine.class);
 	}
 
 	@SuppressWarnings("static-access")

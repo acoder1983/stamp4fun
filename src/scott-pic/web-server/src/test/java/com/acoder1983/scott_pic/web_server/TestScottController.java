@@ -1,9 +1,8 @@
-package test.java.com.acoder1983.scott_pic.web_server;
+package com.acoder1983.scott_pic.web_server;
 
 import java.util.ArrayList;
 
 import junit.framework.TestCase;
-import main.java.com.acoder1983.scott_pic.web_server.ScottController;
 
 public class TestScottController extends TestCase {
 	@SuppressWarnings("static-access")

@@ -1,7 +1,9 @@
 package com.acoder1983.scott_pic.web_server;
 
+import java.util.ArrayList;
+
 public class ScottResult {
-        private String errMsg;
+	private String errMsg;
 	private ArrayList<String> pages;
 
 	public ScottResult() {

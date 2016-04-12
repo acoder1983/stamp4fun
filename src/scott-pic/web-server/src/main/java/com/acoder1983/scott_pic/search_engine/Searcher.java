@@ -37,7 +37,7 @@ public class Searcher {
 		QueryParser parser = new QueryParser(field, analyzer);
 		Query query = parser.parse(content);
 
-		TopDocs results = searcher.search(query, 10);
+		TopDocs results = searcher.search(query, 1000000000);
 		ScoreDoc[] hits = results.scoreDocs;
 		ArrayList<String> pages = new ArrayList<String>();
 		for (int i = 0; i < results.totalHits; ++i) {
