@@ -46,9 +46,31 @@ public class TestSearchEngine extends TestCase {
 		this.assertEquals(1, results.size());
 
 		results = searcher.search("contents", "1992");
-		this.assertEquals(2, results.size());
+		this.assertEquals(3, results.size());
 
 		results = searcher.search("contents", "1993");
 		this.assertEquals(0, results.size());
+
+		results = searcher.search("years", "1992");
+		this.assertEquals(2, results.size());
+	}
+
+	@SuppressWarnings("static-access")
+	public void testSearchYears() throws Exception {
+
+		String scottCatalogPath = "testdata/build2";
+		String indexPath = String.format("%s%s%s", scottCatalogPath, File.separator, "index");
+
+		FileUtils.deleteDirectory(new File(indexPath));
+
+		Builder.build(scottCatalogPath, indexPath);
+
+		Searcher searcher = new Searcher(indexPath);
+
+		ArrayList<String> results = searcher.search("path", "norway");
+		this.assertEquals(1, results.size());
+
+		// results = searcher.search("years", "1992");
+		// this.assertEquals(0, results.size());
 	}
 }

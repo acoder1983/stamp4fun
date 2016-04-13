@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.acoder1983.scott_pic.search_engine.Searcher;
+import com.acoder1983.scott_pic.util.DateUtils;
 import com.acoder1983.scott_pic.util.Logger;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -25,7 +26,7 @@ public class ScottController {
 
 	public static String NATION_FILE;
 
-	@CrossOrigin(origins = "http://localhost:8080")
+	@CrossOrigin(maxAge = 3600)
 	@RequestMapping("/scott")
 	public ScottResult searchScott(@RequestParam(value = "search") String searchStr) throws Exception {
 		Logger.info("search string: " + searchStr);
@@ -45,7 +46,7 @@ public class ScottController {
 			ArrayList<String> nationPages = searcher.search("path", nation);
 			Logger.info("nationPages num: " + nationPages.size());
 
-			ArrayList<String> yearPages = searcher.search("contents", year);
+			ArrayList<String> yearPages = searcher.search("years", year);
 			Logger.info("yearPages num: " + yearPages.size());
 
 			ArrayList<String> pages = parsePages(nationPages, yearPages, File.separator);
@@ -76,6 +77,7 @@ public class ScottController {
 						}
 					}
 					nyPages.add(nationPages.get(i));
+					break;
 				}
 			}
 		}
@@ -122,20 +124,11 @@ public class ScottController {
 
 	private String parseYear(String[] searchKeys) {
 		for (String key : searchKeys) {
-			if (isYear(key)) {
+			if (DateUtils.isScottYear(key)) {
 				return key;
 			}
 		}
 		return null;
-	}
-
-	public static boolean isYear(String string) {
-		try {
-			return string.length() > 3 && Integer.valueOf(string.substring(0, 4)) > 1000
-					&& Integer.valueOf(string.substring(0, 4)) < 3000;
-		} catch (Exception e) {
-			return false;
-		}
 	}
 
 	private String parseNation(String[] searchKeys) throws JsonParseException, JsonMappingException, IOException {
