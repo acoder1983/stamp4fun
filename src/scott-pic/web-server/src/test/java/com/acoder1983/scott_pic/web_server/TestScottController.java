@@ -1,6 +1,10 @@
 package com.acoder1983.scott_pic.web_server;
 
+import java.io.IOException;
 import java.util.ArrayList;
+
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 
 import junit.framework.TestCase;
 
@@ -23,6 +27,17 @@ public class TestScottController extends TestCase {
 		for (int i = 0; i < expect.length; i++) {
 			this.assertEquals(expect[i], searchKeys[i]);
 		}
+	}
+
+	@SuppressWarnings("static-access")
+	public void testParseNation() throws JsonParseException, JsonMappingException, IOException {
+		ScottController controller = new ScottController();
+		String nationFile = "testdata/nations.txt";
+		String[] searchKeys = { "挪威" };
+		this.assertEquals("norway", controller.parseNation(nationFile, searchKeys));
+
+		String[] searchKeys2 = { "中国" };
+		this.assertNull(controller.parseNation(nationFile, searchKeys2));
 	}
 
 	@SuppressWarnings("static-access")

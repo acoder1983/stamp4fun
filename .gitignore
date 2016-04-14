@@ -1,3 +1,9 @@
 /**/bin/
 /**/obj/
 /**/target/
+src/scott-pic/web-client/app.properties
+src/scott-pic/web-client/build.bat
+src/scott-pic/web-client/catalog/
+src/scott-pic/web-client/cataindex/
+src/scott-pic/web-client/run.bat
+src/scott-pic/web-client/web-server-0.0.1.jar

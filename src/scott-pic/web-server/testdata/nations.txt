@@ -1,4 +1,14 @@
-{
-"中国":"china",
+{"澳大利亚":"australia",
+"奥地利":"austria",
+"比利时":"belgium",
+"法国":"france",
+"德国":"germany",
+"英国":"great-britain",
+"希腊":"greece",
+"匈牙利":"hungary",
+"意大利":"italy",
 "日本":"japan",
-}
+"列支敦士登":"liechtenstein",
+"摩纳哥":"monaco",
+"挪威":"norway",
+"圣马力诺":"san-marino"}

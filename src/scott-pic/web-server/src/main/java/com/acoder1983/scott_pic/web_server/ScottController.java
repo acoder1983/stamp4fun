@@ -34,7 +34,7 @@ public class ScottController {
 
 		String[] searchKeys = splitSearchStr(searchStr);
 
-		String nation = parseNation(searchKeys);
+		String nation = parseNation(NATION_FILE, searchKeys);
 		Logger.info("nation: " + nation);
 		String year = parseYear(searchKeys);
 		Logger.info("year: " + year);
@@ -131,9 +131,10 @@ public class ScottController {
 		return null;
 	}
 
-	private String parseNation(String[] searchKeys) throws JsonParseException, JsonMappingException, IOException {
+	String parseNation(String nationFile, String[] searchKeys)
+			throws JsonParseException, JsonMappingException, IOException {
 		ObjectMapper MAPPER = new ObjectMapper();
-		String content = FileUtils.readFileToString(new File(NATION_FILE), "UTF-8");
+		String content = FileUtils.readFileToString(new File(nationFile), "UTF-8");
 		Map<String, String> nationMap = MAPPER.readValue(content, new TypeReference<Map<String, String>>() {
 		});
 		for (String key : searchKeys) {

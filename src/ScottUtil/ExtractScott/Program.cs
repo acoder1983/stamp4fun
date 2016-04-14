@@ -30,6 +30,10 @@ namespace ScottUtil.ExtractScott
         static int FOXIT7_FILTER_Y=680;
         static int FOXIT7_TXT_Y=725;
 
+        static int APP_CLOSE_X=1900;
+        static int APP_CLOSE_Y=12;
+
+
         // static int FOXIT7_Y_LEN=30;
         /// <summary>
         /// 应用程序的主入口点。
@@ -162,7 +166,9 @@ namespace ScottUtil.ExtractScott
         }
 
         static void ClosePdfApp(){
-            new KmSim.KeyPress("%{F4}").Do(MEDIUM_WAIT);
+            // new KmSim.KeyPress("%{F4}").Do(MEDIUM_WAIT);
+            new KmSim.MouseMoveTo(APP_CLOSE_X,APP_CLOSE_Y).Do(SHORT_WAIT);
+            new KmSim.MouseLeftClick().Do(LONG_WAIT);
         }
 
         static string GetPageNumStr(string pageFile){

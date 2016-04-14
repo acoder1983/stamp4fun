@@ -48,7 +48,6 @@ public class FindSameFtxt {
 					try {
 						indexDoc(file);
 					} catch (NoSuchAlgorithmException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 					return FileVisitResult.CONTINUE;
