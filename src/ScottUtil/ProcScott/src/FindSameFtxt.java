@@ -15,23 +15,27 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
 
 public class FindSameFtxt {
 
 	public static void main(String[] args) throws IOException, NoSuchAlgorithmException {
 		indexDocs(Paths.get(args[0]));
-		Set<String> paths = new HashSet<String>();
+		// Set<String> paths = new HashSet<String>();
 		for (int i = 0; i < md5s.size(); ++i) {
 			for (int j = i + 1; j < md5s.size(); ++j) {
 				if (md5s.get(i).equals(md5s.get(j))) {
-					String p = files.get(i).substring(0, files.get(i).length() - 11);
-					if (!paths.contains(p)) {
-						paths.add(p);
-						System.out.println(p);
-						break;
-					}
+					// String p = files.get(i).substring(0,
+					// files.get(i).length() - 11);
+					// String p = files.get(i);
+					// if (!paths.contains(p)) {
+					// paths.add(p);
+					// System.out.println(p);
+					// break;
+					// }
+					System.out.println(files.get(i));
+					System.out.println(files.get(j));
+					System.out.println("");
+					break;
 				}
 			}
 		}

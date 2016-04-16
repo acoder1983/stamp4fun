@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-
+using System.Diagnostics;
 using System.Text;
 using System.Windows.Forms;
 
@@ -30,8 +30,8 @@ namespace ScottUtil.ExtractScott
         static int FOXIT7_FILTER_Y=680;
         static int FOXIT7_TXT_Y=725;
 
-        static int APP_CLOSE_X=1900;
-        static int APP_CLOSE_Y=12;
+        // static int APP_CLOSE_X=1900;
+        // static int APP_CLOSE_Y=12;
 
 
         // static int FOXIT7_Y_LEN=30;
@@ -99,27 +99,28 @@ namespace ScottUtil.ExtractScott
         }
 
         static void ActivatePdfExes(string pageFile){
-            OpenWithAdobeReader11(pageFile);
+            Process p = OpenWithAdobeReader11(pageFile);
             new KmSim.Delay().Do(LONG_WAIT*2);
-            ClosePdfApp();
-            new KmSim.Delay().Do(LONG_WAIT);
-            OpenWithAdobePro8(pageFile);
+            ClosePdfApp(p);
+            // new KmSim.Delay().Do(LONG_WAIT);
+            p = OpenWithAdobePro8(pageFile);
             new KmSim.Delay().Do(LONG_WAIT*2);
-            ClosePdfApp();
-            new KmSim.Delay().Do(LONG_WAIT);
-            OpenWithFoxit7(pageFile);
+            ClosePdfApp(p);
+            // new KmSim.Delay().Do(LONG_WAIT);
+            p = OpenWithFoxit7(pageFile);
             new KmSim.Delay().Do(LONG_WAIT*3);
-            ClosePdfApp();
-            new KmSim.Delay().Do(LONG_WAIT);
+            ClosePdfApp(p);
+            // new KmSim.Delay().Do(LONG_WAIT);
         }
 
-        static void OpenWithFoxit7(string subPageFile){
-            System.Diagnostics.Process.Start(@"C:\Program Files (x86)\Foxit Software\Foxit Reader\FoxitReader.exe", subPageFile);
+        static Process OpenWithFoxit7(string subPageFile){
+            Process p = System.Diagnostics.Process.Start(@"C:\Program Files (x86)\Foxit Software\Foxit Reader\FoxitReader.exe", subPageFile);
             new KmSim.Delay().Do(LONG_WAIT);
+            return p;
         }
 
         static void ProcessInFoxit7(string subPageFile, int pageIdx, string pageFolderPath){
-            OpenWithFoxit7(subPageFile);
+            Process p = OpenWithFoxit7(subPageFile);
 
             // trigger save as 
             new KmSim.KeyPress("^+s").Do(MEDIUM_WAIT);
@@ -136,11 +137,11 @@ namespace ScottUtil.ExtractScott
             new KmSim.KeyPress(string.Format(@"{0}\{1}.f.txt", pageFolderPath, pageIdx)).Do(SHORT_WAIT);
             new KmSim.KeyPress("{ENTER}").Do(MEDIUM_WAIT);
 
-            ClosePdfApp();
+            ClosePdfApp(p);
         }
 
         static void ProcessInAdobeReader11(string subPageFile, int pageIdx, string pageFolderPath){
-            OpenWithAdobeReader11(subPageFile);
+            Process p = OpenWithAdobeReader11(subPageFile);
 
             String[] keyList=new string[]{"%f","h","x"};
             foreach(string k in keyList){
@@ -149,12 +150,12 @@ namespace ScottUtil.ExtractScott
             new KmSim.KeyPress(string.Format(@"{0}\{1}.a.txt", pageFolderPath, pageIdx)).Do(SHORT_WAIT);
             new KmSim.KeyPress("{ENTER}").Do(MEDIUM_WAIT);
 
-            ClosePdfApp();
+            ClosePdfApp(p);
         }
 
 
         static void ProcessInAdobePro8(string subPageFile, int pageIdx, string pageFolderPath, PointPair pp){
-            OpenWithAdobePro8(subPageFile);                    
+            Process p = OpenWithAdobePro8(subPageFile);                    
 
             CutSubPage(subPageFile, pp);
 
@@ -162,13 +163,14 @@ namespace ScottUtil.ExtractScott
             
             // SaveSubPageInTiff(pageIdx, pageFolderPath);
 
-            ClosePdfApp();
+            ClosePdfApp(p);
         }
 
-        static void ClosePdfApp(){
-            // new KmSim.KeyPress("%{F4}").Do(MEDIUM_WAIT);
-            new KmSim.MouseMoveTo(APP_CLOSE_X,APP_CLOSE_Y).Do(SHORT_WAIT);
-            new KmSim.MouseLeftClick().Do(LONG_WAIT);
+        static void ClosePdfApp(Process p){
+            // p.CloseMainWindow();
+            // p.Close();
+            p.Kill();
+            p.WaitForExit();
         }
 
         static string GetPageNumStr(string pageFile){
@@ -201,14 +203,16 @@ namespace ScottUtil.ExtractScott
             new KmSim.KeyPress("{ENTER}").Do(MEDIUM_WAIT);
         }
 
-        static void OpenWithAdobePro8(string pageFile){
-            System.Diagnostics.Process.Start(@"C:\Program Files (x86)\Adobe\Acrobat 8.0\Acrobat\Acrobat.exe", pageFile);
+        static Process OpenWithAdobePro8(string pageFile){
+            Process p = System.Diagnostics.Process.Start(@"C:\Program Files (x86)\Adobe\Acrobat 8.0\Acrobat\Acrobat.exe", pageFile);
             new KmSim.Delay().Do(LONG_WAIT);
+            return p;
         }
 
-        static void OpenWithAdobeReader11(string pageFile){
-            System.Diagnostics.Process.Start(@"C:\Program Files (x86)\Adobe\Reader 11.0\Reader\AcroRd32.exe", pageFile);
+        static Process OpenWithAdobeReader11(string pageFile){
+            Process p = System.Diagnostics.Process.Start(@"C:\Program Files (x86)\Adobe\Reader 11.0\Reader\AcroRd32.exe", pageFile);
             new KmSim.Delay().Do(LONG_WAIT);
+            return p;
         }
 
         static void CutSubPage(string pageFile, PointPair pp){

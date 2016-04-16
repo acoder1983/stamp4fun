@@ -1,5 +1,4 @@
 
-
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
@@ -10,13 +9,6 @@ public class ProcNationPage {
 		File file = new File(nationsPath);
 		File[] paths = file.listFiles();
 		for (File p : paths) {
-			// create nation.txt under p
-			String nationDir = p.getAbsolutePath();
-			String nationTxt = String.format("%s%s%s", nationDir, File.separator, "nation.txt");
-			File nt = new File(nationTxt);
-			if (!nt.exists()) {
-				nt.createNewFile();
-			}
 
 			// find pdf files under p
 			File[] pdfs = p.listFiles(new FileFilter() {
