@@ -7,3 +7,5 @@ src/scott-pic/web-client/catalog/
 src/scott-pic/web-client/cataindex/
 src/scott-pic/web-client/run.bat
 src/scott-pic/web-client/web-server-0.0.1.jar
+src/scott-pic/web-server/testdata/build1st/index/
+src/scott-pic/web-server/testdata/build2/index/

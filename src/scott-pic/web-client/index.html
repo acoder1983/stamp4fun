@@ -38,17 +38,17 @@
                     </div>
                     <div class=" col-md-8">
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Search for..." ng-model="searchKeys"/>
+                            <input type="text" class="form-control" placeholder="请输入 国家+年份" ng-model="searchKeys"/>
                             <span class="input-group-btn">
                                 <button class="btn btn-default" type="button" ng-click="query()">
                                     <span class="glyphicon glyphicon-search" aria-hidden="true">
                                     </span>
                                 </button>
-                                <button type="button" class="btn btn-default">
+                                <button type="button" class="btn btn-default" ng-click="qNext()">
                                     <span class="glyphicon glyphicon-menu-down" aria-hidden="true">
                                     </span>
                                 </button>
-                                <button type="button" class="btn btn-default">
+                                <button type="button" class="btn btn-default" ng-click="qPrev()">
                                     <span class="glyphicon glyphicon-menu-up" aria-hidden="true">
                                     </span>
                                 </button>

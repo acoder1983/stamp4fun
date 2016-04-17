@@ -5,37 +5,59 @@ app.config(['$httpProvider', function($httpProvider) {
 }]);
 app.controller('clientControl', function($scope, $http) {
     if (typeof String.prototype.endsWith != 'function') {
-       String.prototype.endsWith = function (str){
-          return this.slice(-str.length) == str;
-       };
-     }
+        String.prototype.endsWith = function(str) {
+            return this.slice(-str.length) == str;
+        };
+    }
+    var result;
     $scope.query = function() {
-        var url = "http://localhost:9000/scott/?search=" + $scope.searchKeys;
+        sendQueryReq();
+    }
+    $scope.qPrev = function() {
+        $scope.searchKeys = result.prevSearch;
+        sendQueryReq();
+    }
+    $scope.qNext = function() {
+        $scope.searchKeys = result.nextSearch;
+        sendQueryReq();
+    }
+
+    function sendQueryReq() {
+        var url = "http://acoder1983.net:9000/scott/?search=" + $scope.searchKeys;
         $http.get(url).success(function(data, status, headers, config) {
-            displayResult(data.pages);
+            if (data.errMsg.length == 0) {
+                displayResult(data.pages);
+                result = data;
+                runToTop();
+            } else {
+                alert(data.errMsg);
+            }
         }).error(function(data, status, headers, config) {
-            $scope.result = "error: " + data;
+            alert(data);
         });
     }
 
-    function displayResult (imgList) {
-        var imglistContent="<imglist>";
+    function runToTop() {
+        window.scrollTo(0, 0);
+    }
+
+    function displayResult(imgList) {
+        var imglistContent = "<imglist>";
         for (var i = 0; i < imgList.length; i++) {
-            if (i%4==0) {
-                imglistContent+="<div class=\"row\">";
+            if (i % 4 == 0) {
+                imglistContent += "<div class=\"row\">";
             };
-            imglistContent+="<div class=\"col-md-3\"><img src=\""+imgList[i]+"\" class=\"col-center-block\"/></div>";
-            if (i%4==3) {
-                imglistContent+="</div>";
+            imglistContent += "<div class=\"col-md-3\"><img src=\"" + imgList[i] + "\" class=\"col-center-block\"/></div>";
+            if (i % 4 == 3) {
+                imglistContent += "</div>";
             };
         };
         if (!imglistContent.endsWith("</div></div>")) {
-            imglistContent+="</div>";
+            imglistContent += "</div>";
         };
-        imglistContent+="</imglist>";
+        imglistContent += "</imglist>";
         $('imglist').each(function() {
-            $(this).replaceWith(imglistContent);    
+            $(this).replaceWith(imglistContent);
         });
     }
 });
-

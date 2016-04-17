@@ -34,7 +34,7 @@ public class TestScottController extends TestCase {
 		ScottController controller = new ScottController();
 		String nationFile = "testdata/nations.txt";
 		String[] searchKeys = { "挪威" };
-		this.assertEquals("norway", controller.parseNation(nationFile, searchKeys));
+		this.assertEquals("norway", controller.parseNation(nationFile, searchKeys).nationEn);
 
 		String[] searchKeys2 = { "中国" };
 		this.assertNull(controller.parseNation(nationFile, searchKeys2));

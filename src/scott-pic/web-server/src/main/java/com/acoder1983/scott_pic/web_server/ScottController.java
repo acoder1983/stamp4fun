@@ -34,28 +34,31 @@ public class ScottController {
 
 		String[] searchKeys = splitSearchStr(searchStr);
 
-		String nation = parseNation(NATION_FILE, searchKeys);
-		Logger.info("nation: " + nation);
-		String year = parseYear(searchKeys);
-		Logger.info("year: " + year);
+		NationNames names = parseNation(NATION_FILE, searchKeys);
 
-		if (nation == null || year == null) {
-			result.setErrMsg("input nation+year");
+		String year = parseYear(searchKeys);
+
+		if (names == null || year == null) {
+			result.setErrMsg("请输入 国家+年份");
 		} else {
+			Logger.info(String.format("nation: %s,year: %s", names.nationEn, year));
+
 			Searcher searcher = new Searcher(INDEX_PATH);
-			ArrayList<String> nationPages = searcher.search("path", nation);
+			ArrayList<String> nationPages = searcher.search("path", names.nationEn);
 			Logger.info("nationPages num: " + nationPages.size());
 
 			ArrayList<String> yearPages = searcher.search("years", year);
 			Logger.info("yearPages num: " + yearPages.size());
 
 			ArrayList<String> pages = parsePages(nationPages, yearPages, File.separator);
+			Logger.info("pages num: " + pages.size());
 			for (int i = 0; i < pages.size(); ++i) {
 				pages.set(i, pages.get(i).replace("f.txt", "jpg"));
 			}
-			Logger.info("pages num: " + yearPages.size());
 
 			result.setPages(pages);
+			result.setPrevSearch(String.format("%s %s", names.nationCn, Integer.valueOf(year) - 1));
+			result.setNextSearch(String.format("%s %s", names.nationCn, Integer.valueOf(year) + 1));
 		}
 		return result;
 	}
@@ -131,7 +134,12 @@ public class ScottController {
 		return null;
 	}
 
-	String parseNation(String nationFile, String[] searchKeys)
+	class NationNames {
+		public String nationCn;
+		public String nationEn;
+	}
+
+	NationNames parseNation(String nationFile, String[] searchKeys)
 			throws JsonParseException, JsonMappingException, IOException {
 		ObjectMapper MAPPER = new ObjectMapper();
 		String content = FileUtils.readFileToString(new File(nationFile), "UTF-8");
@@ -139,7 +147,10 @@ public class ScottController {
 		});
 		for (String key : searchKeys) {
 			if (nationMap.containsKey(key)) {
-				return nationMap.get(key);
+				NationNames names = new NationNames();
+				names.nationCn = key;
+				names.nationEn = nationMap.get(key);
+				return names;
 			}
 		}
 		return null;

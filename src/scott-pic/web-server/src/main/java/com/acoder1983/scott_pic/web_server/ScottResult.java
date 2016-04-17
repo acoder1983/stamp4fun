@@ -5,6 +5,8 @@ import java.util.ArrayList;
 public class ScottResult {
 	private String errMsg;
 	private ArrayList<String> pages;
+	private String prevSearch;
+	private String nextSearch;
 
 	public ScottResult() {
 		errMsg = "";
@@ -25,5 +27,21 @@ public class ScottResult {
 
 	public void setPages(ArrayList<String> pages) {
 		this.pages = pages;
+	}
+
+	public String getPrevSearch() {
+		return prevSearch;
+	}
+
+	public void setPrevSearch(String prevSearch) {
+		this.prevSearch = prevSearch;
+	}
+
+	public String getNextSearch() {
+		return nextSearch;
+	}
+
+	public void setNextSearch(String nextSearch) {
+		this.nextSearch = nextSearch;
 	}
 }
