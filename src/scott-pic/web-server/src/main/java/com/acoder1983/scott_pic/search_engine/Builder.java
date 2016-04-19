@@ -24,7 +24,7 @@ import org.apache.lucene.index.IndexWriterConfig.OpenMode;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 
-import com.acoder1983.scott_pic.util.DateUtils;
+import com.acoder1983.scott_pic.util.StringUtils;
 
 public class Builder {
 	public static void build(String docsPath, String indexPath) {
@@ -101,8 +101,9 @@ public class Builder {
 			try (BufferedReader reader = new BufferedReader(new FileReader(file.toString()))) {
 				String tempString = null;
 				while ((tempString = reader.readLine()) != null) {
-					if (tempString.length() > 3 && DateUtils.isScottYear(tempString.substring(0, 4))) {
-						yearLines += " " + tempString;
+					String year = StringUtils.getScottYear(tempString);
+					if (year != null) {
+						yearLines += " " + year;
 					}
 					allLines += " " + tempString;
 				}

@@ -3,6 +3,7 @@ package com.acoder1983.scott_pic.web_server;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import com.acoder1983.scott_pic.util.StringUtils;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
@@ -11,9 +12,8 @@ import junit.framework.TestCase;
 public class TestScottController extends TestCase {
 	@SuppressWarnings("static-access")
 	public void testSplitSearchStr() {
-		ScottController controller = new ScottController();
 		String searchStr = "china 1992";
-		String[] searchKeys = controller.splitSearchStr(searchStr);
+		String[] searchKeys = StringUtils.splitString(searchStr);
 		String[] expect = new String[] { "china", "1992" };
 		this.assertEquals(expect.length, searchKeys.length);
 		for (int i = 0; i < expect.length; i++) {
@@ -21,7 +21,7 @@ public class TestScottController extends TestCase {
 		}
 
 		searchStr = "  look   2016 ";
-		searchKeys = controller.splitSearchStr(searchStr);
+		searchKeys = StringUtils.splitString(searchStr);
 		expect = new String[] { "look", "2016" };
 		this.assertEquals(expect.length, searchKeys.length);
 		for (int i = 0; i < expect.length; i++) {

@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.acoder1983.scott_pic.search_engine.Searcher;
-import com.acoder1983.scott_pic.util.DateUtils;
 import com.acoder1983.scott_pic.util.Logger;
+import com.acoder1983.scott_pic.util.StringUtils;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -32,7 +32,7 @@ public class ScottController {
 		Logger.info("search string: " + searchStr);
 		ScottResult result = new ScottResult();
 
-		String[] searchKeys = splitSearchStr(searchStr);
+		String[] searchKeys = StringUtils.splitString(searchStr);
 
 		NationNames names = parseNation(NATION_FILE, searchKeys);
 
@@ -127,8 +127,9 @@ public class ScottController {
 
 	private String parseYear(String[] searchKeys) {
 		for (String key : searchKeys) {
-			if (DateUtils.isScottYear(key)) {
-				return key;
+			String year = StringUtils.getScottYear(key);
+			if (year != null) {
+				return year;
 			}
 		}
 		return null;
@@ -156,14 +157,4 @@ public class ScottController {
 		return null;
 	}
 
-	public String[] splitSearchStr(String searchStr) {
-		String[] arr = searchStr.split(" ");
-		ArrayList<String> sList = new ArrayList<String>();
-		for (String s : arr) {
-			if (!s.trim().isEmpty()) {
-				sList.add(s);
-			}
-		}
-		return sList.toArray(new String[] {});
-	}
 }
