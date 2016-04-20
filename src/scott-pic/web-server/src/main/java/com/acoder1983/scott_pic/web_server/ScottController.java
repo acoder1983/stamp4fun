@@ -26,6 +26,8 @@ public class ScottController {
 
 	public static String NATION_FILE;
 
+	public static Searcher SEARCHER;
+
 	@CrossOrigin(maxAge = 3600)
 	@RequestMapping("/scott")
 	public ScottResult searchScott(@RequestParam(value = "search") String searchStr) throws Exception {
@@ -39,15 +41,14 @@ public class ScottController {
 		String year = parseYear(searchKeys);
 
 		if (names == null || year == null) {
-			result.setErrMsg("请输入 国家+年份");
+			result.setErrMsg("请输入 国家 年份");
 		} else {
 			Logger.info(String.format("nation: %s,year: %s", names.nationEn, year));
 
-			Searcher searcher = new Searcher(INDEX_PATH);
-			ArrayList<String> nationPages = searcher.search("path", names.nationEn);
+			ArrayList<String> nationPages = SEARCHER.search("path", names.nationEn);
 			Logger.info("nationPages num: " + nationPages.size());
 
-			ArrayList<String> yearPages = searcher.search("years", year);
+			ArrayList<String> yearPages = SEARCHER.search("years", year);
 			Logger.info("yearPages num: " + yearPages.size());
 
 			ArrayList<String> pages = parsePages(nationPages, yearPages, File.separator);

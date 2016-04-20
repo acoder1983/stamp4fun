@@ -1,14 +1,17 @@
 package com.acoder1983.scott_pic.web_server;
 
+import java.io.IOException;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.acoder1983.scott_pic.search_engine.Builder;
+import com.acoder1983.scott_pic.search_engine.Searcher;
 
 @SpringBootApplication
 public class Application {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		if (args[0].equals("-build") && args.length != 4) {
 			String catalogPath = args[1];
 			String indexPath = args[2];
@@ -24,6 +27,7 @@ public class Application {
 					otherArgs[i] = args[i + others];
 				}
 			}
+			ScottController.SEARCHER = new Searcher(ScottController.INDEX_PATH);
 			SpringApplication.run(Application.class, otherArgs);
 		} else {
 			printUsageMsg();

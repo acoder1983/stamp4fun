@@ -70,7 +70,13 @@ public class TestSearchEngine extends TestCase {
 		ArrayList<String> results = searcher.search("path", "norway");
 		this.assertEquals(1, results.size());
 
-		// results = searcher.search("years", "1992");
-		// this.assertEquals(0, results.size());
+		results = searcher.search("years", "1992");
+		this.assertEquals(0, results.size());
+
+		results = searcher.search("years", "1997");
+		this.assertEquals(1, results.size());
+
+		results = searcher.search("years", "1962");
+		this.assertEquals(0, results.size());
 	}
 }

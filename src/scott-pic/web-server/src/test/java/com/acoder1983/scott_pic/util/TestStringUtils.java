@@ -16,5 +16,7 @@ public class TestStringUtils extends TestCase {
 
 		this.assertNull(StringUtils.getScottYear("1964 A21"));
 		this.assertNull(StringUtils.getScottYear("1964 AB21"));
+		this.assertNull(StringUtils.getScottYear("1964. abc"));
+		this.assertNull(StringUtils.getScottYear("1962. No. 1163, Welfare, help for the elderly, "));
 	}
 }

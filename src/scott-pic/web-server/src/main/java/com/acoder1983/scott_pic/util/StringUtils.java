@@ -13,6 +13,9 @@ public class StringUtils {
 			Matcher m = p.matcher(sList[0]);
 			if (m.find()) {
 				year = m.group();
+				if (sList[0].length() > 4 && sList[0].substring(4, 5).equals(".")) {
+					year = null;
+				}
 				if (sList.length > 1) {
 					p = Pattern.compile("[A-Z]+\\d+");
 					m = p.matcher(sList[1]);
