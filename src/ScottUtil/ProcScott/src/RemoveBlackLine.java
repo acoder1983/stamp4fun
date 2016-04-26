@@ -26,7 +26,7 @@ public class RemoveBlackLine {
 					try {
 						procDoc(file);
 					} catch (NoSuchAlgorithmException e) {
-						e.printStackTrace();
+						System.out.println(e.getMessage());
 					}
 					return FileVisitResult.CONTINUE;
 				}
@@ -48,19 +48,22 @@ public class RemoveBlackLine {
 			int height = bufImg.getHeight();
 			int width = bufImg.getWidth();
 			if (height == 1507 && width == 275) {
-				int color = bufImg.getRGB(274, 0) & 0xFFFFFF;
-				if (color == 0) {
-					color = bufImg.getRGB(273, 0);
-					for (int i = 0; i < 1507; ++i)
-						bufImg.setRGB(274, i, color);
-					ImageIO.write((BufferedImage) bufImg, "jpg", f);
-					System.out.println(f.toString());
+				for (int j = 270; j < 275; ++j) {
+					int color = bufImg.getRGB(j, 0) & 0xFFFFFF;
+					if (color == 0) {
+						color = bufImg.getRGB(0, 0);
+						for (int i = 0; i < 1507; ++i)
+							bufImg.setRGB(j, i, color);
+						ImageIO.write((BufferedImage) bufImg, "jpg", f);
+						System.out.println(f.toString());
+					}
+
 				}
 			}
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 		}
 	}
 }
