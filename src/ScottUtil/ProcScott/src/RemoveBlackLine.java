@@ -12,7 +12,7 @@ import java.security.NoSuchAlgorithmException;
 
 import javax.imageio.ImageIO;
 
-public class RmoveBlackLine {
+public class RemoveBlackLine {
 
 	public static void main(String[] args) throws NoSuchAlgorithmException, IOException {
 		findDocs(Paths.get(args[0]));
