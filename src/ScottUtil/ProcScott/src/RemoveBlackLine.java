@@ -63,7 +63,7 @@ public class RemoveBlackLine {
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			System.out.println(e.getMessage());
+			System.out.println(f.toString() + " error: " + e.getMessage());
 		}
 	}
 }
