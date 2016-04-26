@@ -18,20 +18,16 @@ import java.util.ArrayList;
 
 public class FindSameFtxt {
 
+	static String DUMMY_TXT_MD5_1 = "4cc18d009e8eb9a894d9fd07897aba0c";
+	static String DUMMY_TXT_MD5_2 = "a77b5206524dd75b7fe89a3e726c4661";
+
 	public static void main(String[] args) throws IOException, NoSuchAlgorithmException {
 		indexDocs(Paths.get(args[0]));
-		// Set<String> paths = new HashSet<String>();
 		for (int i = 0; i < md5s.size(); ++i) {
 			for (int j = i + 1; j < md5s.size(); ++j) {
-				if (md5s.get(i).equals(md5s.get(j))) {
-					// String p = files.get(i).substring(0,
-					// files.get(i).length() - 11);
-					// String p = files.get(i);
-					// if (!paths.contains(p)) {
-					// paths.add(p);
-					// System.out.println(p);
-					// break;
-					// }
+				if (!md5s.get(i).toLowerCase().equals(DUMMY_TXT_MD5_1)
+						&& !md5s.get(i).toLowerCase().equals(DUMMY_TXT_MD5_2)
+						&& md5s.get(i).toLowerCase().equals(md5s.get(j).toLowerCase())) {
 					System.out.println(files.get(i));
 					System.out.println(files.get(j));
 					System.out.println("");

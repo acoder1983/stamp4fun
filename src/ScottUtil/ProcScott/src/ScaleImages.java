@@ -31,7 +31,7 @@ public class ScaleImages {
 					try {
 						procDoc(file);
 					} catch (NoSuchAlgorithmException e) {
-						e.printStackTrace();
+						System.out.println(file.toString() + " " + e.getMessage());
 					}
 					return FileVisitResult.CONTINUE;
 				}
@@ -72,12 +72,29 @@ public class ScaleImages {
 					g.drawImage(itemp, (width - itemp.getWidth(null)) / 2, 0, itemp.getWidth(null),
 							itemp.getHeight(null), Color.white, null);
 				g.dispose();
+				removeBlackLines(f, image);
 				itemp = image;
 				ImageIO.write((BufferedImage) itemp, "jpg", f);
 				System.out.println("scale " + f.toString());
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.out.println(f.toString() + " " + e.getMessage());
+		}
+	}
+
+	static void removeBlackLines(File f, BufferedImage bufImg) {
+		int height = bufImg.getHeight();
+		int width = bufImg.getWidth();
+		if (height == 1507 && width == 275) {
+			for (int j = 270; j < 275; ++j) {
+				int color = bufImg.getRGB(j, 0) & 0xFFFFFF;
+				if (color == 0) {
+					color = bufImg.getRGB(0, 0);
+					for (int i = 0; i < 1507; ++i)
+						bufImg.setRGB(j, i, color);
+				}
+
+			}
 		}
 	}
 
