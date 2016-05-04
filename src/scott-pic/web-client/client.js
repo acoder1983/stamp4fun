@@ -26,6 +26,9 @@ app.controller('clientControl', function($scope, $http) {
         var url = "http://acoder1983.net:9000/scott/?search=" + $scope.searchKeys;
         $http.get(url).success(function(data, status, headers, config) {
             if (data.errMsg.length == 0) {
+                if (result) {
+                    data.pages = removeIdenticalPages(data.pages, result.pages);
+                };
                 displayResult(data.pages);
                 result = data;
                 runToTop();
@@ -35,6 +38,23 @@ app.controller('clientControl', function($scope, $http) {
         }).error(function(data, status, headers, config) {
             alert(data);
         });
+    }
+
+    function removeIdenticalPages(newPages, oldPages) {
+        var n = [];
+        for (var i = 0; i < newPages.length; i++) {
+            var found = false;
+            for (var j = 0; j < oldPages.length; j++) {
+                if (newPages[i] == oldPages[j]) {
+                    found = true;
+                    break;
+                };
+            }
+            if (!found) {
+                n.push(newPages[i]);
+            };
+        }
+        return n;
     }
 
     function runToTop() {
@@ -49,8 +69,8 @@ app.controller('clientControl', function($scope, $http) {
             };
             imglistContent += "<div class=\"col-md-3\"><img src=\"" + imgList[i] + "\" class=\"col-center-block\"/></div>";
             if (i % 4 == 3) {
-            	imglistContent += "<div style=\"margin:0;padding:0; width:100%;height:1px;background-color:#000000;overflow:hidden;margin-top: 15px;
-\"></div>";
+                imglistContent += "<div style=\"margin:0;padding:0; width:100%;height:1px;background-color:#000000;overflow:hidden;margin-top: 15px;\
+                " > < /div>";
                 imglistContent += "</div>";
             };
         };
