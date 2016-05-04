@@ -69,8 +69,7 @@ app.controller('clientControl', function($scope, $http) {
             };
             imglistContent += "<div class=\"col-md-3\"><img src=\"" + imgList[i] + "\" class=\"col-center-block\"/></div>";
             if (i % 4 == 3) {
-                imglistContent += "<div style=\"margin:0;padding:0; width:100%;height:1px;background-color:#000000;overflow:hidden;margin-top: 15px;\
-                " > < /div>";
+                imglistContent += "<div style=\"margin:0;padding:0; width:100%;height:1px;background-color:#000000;overflow:hidden;margin-top: 15px;\" > < /div>";
                 imglistContent += "</div>";
             };
         };
