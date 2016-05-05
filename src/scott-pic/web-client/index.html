@@ -38,9 +38,10 @@
                     </div>
                     <div class=" col-md-8">
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="请输入 国家+年份" ng-model="searchKeys"/>
+                            <input type="text" class="form-control" placeholder="请输入 国家+年份" ng-model="searchKeys" onkeydown='if(event.keyCode
+==13){queryBtn.click()}'/>
                             <span class="input-group-btn">
-                                <button class="btn btn-default" type="button" ng-click="query()">
+                                <button id="queryBtn" class="btn btn-default" type="button" ng-click="query()">
                                     <span class="glyphicon glyphicon-search" aria-hidden="true">
                                     </span>
                                 </button>
